@@ -16,7 +16,7 @@ Installation
 
 Usually you would install HumusMvc in the HumusMvcSkeletonApplication. If you want to follow that steps, please take a look at the installation instructions of the HumusMvcSkeletonApplication.
 
-You can install HumusMvc in your SkeletonApplication by:
+However, you can install HumusMvc in your custom skeleton application:
 
  1.  Add `"prolic/humus-mvc": "dev-master"` to your `composer.json`
  2.  Run `php composer.phar install`
