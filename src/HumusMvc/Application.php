@@ -27,8 +27,7 @@ use Zend_Controller_Response_Abstract as Response;
  * $services = new Zend\ServiceManager\ServiceManager($servicesConfig);
  * $app      = new Application($appConfig, $services);
  * $app->bootstrap();
- * $response = $app->run();
- * $response->send();
+ * $app->run();
  * </code>
  *
  * bootstrap() opts in to the default route, dispatch, and view listeners,
