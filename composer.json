@@ -1,7 +1,7 @@
 {
     "name": "prolic/humus-mvc",
     "type": "library",
-    "description": "HumusMvc integrated ZF2's ModuleManager and ServiceManager in a ZF2 application",
+    "description": "HumusMvc integrated ZF2's ModuleManager and ServiceManager in a ZF1 application",
     "keywords": ["zf2", "zf1", "mvc", "humus"],
     "homepage": "https://github.com/prolic/HumusMvc",
     "license": "MIT",
