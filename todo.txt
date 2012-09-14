@@ -1,0 +1,32 @@
+front controller params:
+
+return array(
+    'front_controller' => array(
+        'controller_directory' => array(
+            'test' => __DIR__ . '/../src/test/controllers' // key = name of module, value = path to controllers in this module
+        ),
+        'module_controller_directory_name'=> 'controllers',
+        'base_url' => '/',
+        'params' => array(
+            'displayExceptions' => false, // true for development
+            'disableOutputBuffering' => true
+        ),
+        'plugins' => array(
+            'localeSwitcher' => 'Application\Plugin\LocaleSwitcher\LocaleSwitcher',
+            'unitSwitcher' => 'Application\Plugin\UnitSwitcher\UnitSwitcher',
+            'logIn' => array(
+                'class' => 'Application\Plugin\LogIn\LogIn',
+                'stack_index' => '111',
+            ),
+            'thruLogIn' => array(
+                'class' => 'Application\Plugin\ThruLogIn\ThruLogIn',
+                'stack_index' => 98
+            ),
+        ),
+        'throw_exceptions' => false,
+        'return_response' => false,
+        'default_module' => 'default',
+        'default_action' => 'index',
+        'default_controller_name' => 'index',
+    )
+);
