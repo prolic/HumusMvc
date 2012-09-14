@@ -1,0 +1,21 @@
+{
+    "name": "prolic/humus-mvc",
+    "type": "library",
+    "description": "HumusMvc integrated ZF2's ModuleManager and ServiceManager in a ZF2 application",
+    "keywords": ["zf2", "zf1", "mvc", "humus"],
+    "homepage": "https://github.com/prolic/HumusMvc",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sascha-Oliver Prolic",
+            "email": "saschaprolic@googlemail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zendframework": "2.*"
+    },
+    "autoload": {
+        "classmap": [ "src/" ]
+    }
+}

@@ -1,4 +1,5 @@
-front controller params:
+- document view params
+- document front controller params:
 
 return array(
     'front_controller' => array(
