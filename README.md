@@ -7,6 +7,7 @@ Dependencies
 ------------
 
  -  [ZendFramework 2.x](https://github.com/zendframework/zf2)
+ -  [ZendFramework 1.12.x](http://framework.zend.com)
  -  Any application similar to the
     [HumusMvcSkeletonApplication](https://github.com/prolic/HumusMvcSkeletonApplication)
 
