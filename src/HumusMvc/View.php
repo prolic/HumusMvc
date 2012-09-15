@@ -46,8 +46,9 @@ class View extends Zend_View implements ServiceLocatorAwareInterface
      */
     public function getHelper($name)
     {
-        if ($this->getServiceLocator()->has($name)) {
-            return $this->getServiceLocator()->get($name);
+        $serviceLocator = $this->getServiceLocator();
+        if ($serviceLocator->has($name)) {
+            return $serviceLocator->get($name);
         }
         return parent::getHelper($name);
     }

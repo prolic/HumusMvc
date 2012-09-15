@@ -108,22 +108,20 @@ class Dispatcher extends StandardDispatcher implements
                 $className = $this->formatClassName($this->_curModule, $className);
             }
         }
-
         $sl = $this->getServiceLocator();
-
         if ($sl->has($className)) {
             $controller = $sl->get($className);
         } else {
             // default controller without dependencies
-            $controller = new $className($request, $this->getResponse(), $this->getParams());
+            $controller = new $className($request, $response, $this->getParams());
             if ($controller instanceof ServiceLocatorAwareInterface) {
                 $controller->setServiceLocator($sl);
             }
         }
 
-        if (!($controller instanceof ActionControllerInterface) &&
-            !($controller instanceof ActionController)) {
-            // // require_once 'Zend/Controller/Dispatcher/Exception.php';
+        if (!($controller instanceof ActionControllerInterface)
+            && !($controller instanceof ActionController)
+        ) {
             throw new DispatcherException(
                 'Controller "' . $className . '" is not an instance of Zend_Controller_Action_Interface'
             );
