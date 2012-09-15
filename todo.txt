@@ -1,8 +1,8 @@
 TODO LIST:
 
-- add possibility to use view helpers with service manager
+- add possibility to use view helpers with service manager [DONE]
 - add possibility to use action helpers with service manager
-- add possibility to use controller plugins with service manager
+- add possibility to use controller plugins with service manager [DONE]
 - document view params
 - document front controller params:
 

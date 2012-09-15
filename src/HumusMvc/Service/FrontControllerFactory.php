@@ -56,7 +56,12 @@ class FrontControllerFactory implements FactoryInterface
                     $pluginClass = $plugin;
                     $stackIndex = null;
                 }
-                $plugin = $serviceLocator->get($pluginClass);
+                // plugins can be loaded with service locator
+                if ($serviceLocator->has($pluginClass)) {
+                    $plugin = $serviceLocator->get($pluginClass);
+                } else {
+                    $plugin = new $pluginClass();
+                }
                 $frontController->registerPlugin($plugin, $stackIndex);
             }
         }
