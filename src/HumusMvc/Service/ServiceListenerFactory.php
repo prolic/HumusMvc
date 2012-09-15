@@ -28,7 +28,8 @@ class ServiceListenerFactory extends ZendServiceListenerFactory
             'Config'                  => 'Zend\Mvc\Service\ConfigFactory',
             'DependencyInjector'      => 'Zend\Mvc\Service\DiFactory',
             'FrontController'         => 'HumusMvc\Service\FrontControllerFactory',
-            'View'                    => 'HumusMvc\Service\ViewFactory'
+            'View'                    => 'HumusMvc\Service\ViewFactory',
+            'ViewHelperManager'       => 'HumusMvc\Service\ViewHelperManagerFactory'
         ),
         'aliases' => array(
             'Configuration'                          => 'Config',

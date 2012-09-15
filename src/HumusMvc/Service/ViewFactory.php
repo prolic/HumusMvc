@@ -20,8 +20,10 @@ class ViewFactory implements FactoryInterface
         $config = $serviceLocator->get('Config');
         $viewConfig = isset($config['view']) ? $config['view'] : array();
 
-        $className = isset($viewConfig['classname']) ? $viewConfig['classname'] : 'HumusMvc\View';
+        $className = isset($viewConfig['classname']) ? $viewConfig['classname'] : 'Zend_View';
         $view = new $className($viewConfig);
+        $view->setPluginLoader($serviceLocator->get('ViewHelperManager'), 'helper');
+        die('dd');
 
         if (isset($viewConfig['doctype'])) {
             $view->doctype()->setDoctype(strtoupper($viewConfig['doctype']));
@@ -29,6 +31,7 @@ class ViewFactory implements FactoryInterface
                 $view->headMeta()->setCharset($viewConfig['charset']);
             }
         }
+        die('dd');
         if (isset($viewConfig['contentType'])) {
             $view->headMeta()->appendHttpEquiv('Content-Type', $viewConfig['contentType']);
         }
