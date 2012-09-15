@@ -2,55 +2,38 @@
 
 namespace HumusMvc;
 
-use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
-use Zend_View;
-use Zend_View_Helper_Interface as ViewHelper;
-
-class View extends Zend_View implements ServiceLocatorAwareInterface
+class View extends \Zend_View
 {
-
     /**
-     * @var ServiceLocatorInterface
+     * Plugin loaders
+     * @var array
      */
-    protected $_serviceLocator;
+    private $_loaders = array();
 
     /**
-     * Set service locator
+     * Plugin types
+     * @var array
+     */
+    private $_loaderTypes = array('filter', 'helper');
+
+    /**
+     * Set plugin loader for a particular plugin type
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param  \Zend_Loader_PluginLoaderInterface $loader
+     * @param  string $type
      * @return View
      */
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
+    public function setPluginLoader(\Zend_Loader_PluginLoader $loader, $type)
     {
-        $this->_serviceLocator = $serviceLocator;
+        $type = strtolower($type);
+        if (!in_array($type, $this->_loaderTypes)) {
+            // require_once 'Zend/View/Exception.php';
+            $e = new \Zend_View_Exception(sprintf('Invalid plugin loader type "%s"', $type));
+            $e->setView($this);
+            throw $e;
+        }
+
+        $this->_loaders[$type] = $loader;
         return $this;
     }
-
-    /**
-     * Get service locator
-     *
-     * @return ServiceLocatorInterface
-     */
-    public function getServiceLocator()
-    {
-        return $this->_serviceLocator;
-    }
-
-
-    /**
-     * Get a helper by name
-     *
-     * @param  string $name
-     * @return ViewHelper
-     */
-    public function getHelper($name)
-    {
-        $serviceLocator = $this->getServiceLocator();
-        if ($serviceLocator->has($name)) {
-            return $serviceLocator->get($name);
-        }
-        return parent::getHelper($name);
-    }
-
 }

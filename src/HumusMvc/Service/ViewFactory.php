@@ -20,7 +20,7 @@ class ViewFactory implements FactoryInterface
         $config = $serviceLocator->get('Config');
         $viewConfig = isset($config['view']) ? $config['view'] : array();
 
-        $className = isset($viewConfig['classname']) ? $viewConfig['classname'] : 'Zend_View';
+        $className = isset($viewConfig['classname']) ? $viewConfig['classname'] : 'HumusMvc\View';
         $view = new $className($viewConfig);
         $view->setPluginLoader($serviceLocator->get('ViewHelperManager'), 'helper');
         die('dd');
