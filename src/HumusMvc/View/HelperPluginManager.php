@@ -16,9 +16,6 @@ use Zend_View_Helper_Interface as ViewHelperInterface;
  * Enforces that helpers retrieved are instances of
  * Helper\HelperInterface. Additionally, it registers a number of default
  * helpers.
- *
- * @category   Zend
- * @package    Zend_View
  */
 class HelperPluginManager extends AbstractPluginManager implements PluginLoaderInterface
 {
@@ -155,7 +152,7 @@ class HelperPluginManager extends AbstractPluginManager implements PluginLoaderI
      */
     public function addPrefixPath($prefix, $path)
     {
-        throw new Exception\UnsupportedMethodCallException('method addPrefixPath() is not supported in ' . __CLASS_);
+        throw new Exception\UnsupportedMethodCallException('method addPrefixPath() is not supported in ' . __CLASS__);
     }
 
     /**
@@ -200,7 +197,6 @@ class HelperPluginManager extends AbstractPluginManager implements PluginLoaderI
      */
     public function load($name)
     {
-        echo $name; die;
         return $this->get($name);
     }
 

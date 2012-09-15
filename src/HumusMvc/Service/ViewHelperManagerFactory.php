@@ -27,7 +27,7 @@ class ViewHelperManagerFactory extends AbstractPluginManagerFactory
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $plugins = parent::createService($serviceLocator);
-
+/*
         // Configure URL view helper with router
         $plugins->setFactory('url', function($sm) use($serviceLocator) {
             $helper = new ViewHelper\Url;
@@ -57,13 +57,15 @@ class ViewHelperManagerFactory extends AbstractPluginManagerFactory
             $basePathHelper->setBasePath($basePath);
             return $basePathHelper;
         });
-
+*/
         /**
          * Configure doctype view helper with doctype from configuration, if available.
          *
          * Other view helpers depend on this to decide which spec to generate their tags
          * based on. This is why it must be set early instead of later in the layout phtml.
          */
+
+/*
         $plugins->setFactory('doctype', function($sm) use($serviceLocator) {
             $config = $serviceLocator->get('Config');
             $config = $config['view_manager'];
@@ -73,7 +75,7 @@ class ViewHelperManagerFactory extends AbstractPluginManagerFactory
             }
             return $doctypeHelper;
         });
-
+*/
         return $plugins;
     }
 }

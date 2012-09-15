@@ -23,7 +23,6 @@ class ViewFactory implements FactoryInterface
         $className = isset($viewConfig['classname']) ? $viewConfig['classname'] : 'HumusMvc\View';
         $view = new $className($viewConfig);
         $view->setPluginLoader($serviceLocator->get('ViewHelperManager'), 'helper');
-        die('dd');
 
         if (isset($viewConfig['doctype'])) {
             $view->doctype()->setDoctype(strtoupper($viewConfig['doctype']));
@@ -31,7 +30,7 @@ class ViewFactory implements FactoryInterface
                 $view->headMeta()->setCharset($viewConfig['charset']);
             }
         }
-        die('dd');
+
         if (isset($viewConfig['contentType'])) {
             $view->headMeta()->appendHttpEquiv('Content-Type', $viewConfig['contentType']);
         }

@@ -2,6 +2,8 @@
 
 namespace HumusMvc;
 
+use HumusMvc\View\HelperPluginManager;
+
 class View extends \Zend_View
 {
     /**
@@ -23,7 +25,7 @@ class View extends \Zend_View
      * @param  string $type
      * @return View
      */
-    public function setPluginLoader(\Zend_Loader_PluginLoader $loader, $type)
+    public function setPluginLoader(\Zend_Loader_PluginLoader_Interface $loader, $type)
     {
         $type = strtolower($type);
         if (!in_array($type, $this->_loaderTypes)) {
@@ -32,8 +34,82 @@ class View extends \Zend_View
             $e->setView($this);
             throw $e;
         }
-
+        if ($loader instanceof HelperPluginManager) {
+            $loader->setView($this);
+        }
         $this->_loaders[$type] = $loader;
         return $this;
     }
+
+    /**
+     * Retrieve plugin loader for a specific plugin type
+     *
+     * @param  string $type
+     * @return \Zend_Loader_PluginLoader_Interface
+     */
+    public function getPluginLoader($type)
+    {
+        $type = strtolower($type);
+        if (!in_array($type, $this->_loaderTypes)) {
+            $e = new \Zend_View_Exception(sprintf('Invalid plugin loader type "%s"; cannot retrieve', $type));
+            $e->setView($this);
+            throw $e;
+        }
+
+        if (!array_key_exists($type, $this->_loaders)) {
+            $prefix     = 'Zend_View_';
+            $pathPrefix = 'Zend/View/';
+
+            $pType = ucfirst($type);
+            switch ($type) {
+                case 'filter':
+                default:
+                    $prefix     .= $pType;
+                    $pathPrefix .= $pType;
+                    $loader = new \Zend_Loader_PluginLoader(array(
+                        $prefix => $pathPrefix
+                    ));
+                    $this->_loaders[$type] = $loader;
+                    break;
+            }
+        }
+        return $this->_loaders[$type];
+    }
+
+    /**
+     * Get a helper by name
+     *
+     * @param  string $name
+     * @return object
+     */
+    public function getHelper($name)
+    {
+        return $this->getPluginLoader('helper')->load($name);
+    }
+
+    /**
+     * Given a base path, add script, helper, and filter paths relative to it
+     *
+     * Assumes a directory structure of:
+     * <code>
+     * basePath/
+     *     scripts/
+     *     filters/
+     * </code>
+     *
+     * @param  string $path
+     * @param  string $prefix Prefix to use for helper and filter paths
+     * @return View
+     */
+    public function addBasePath($path, $classPrefix = 'Zend_View')
+    {
+        $path        = rtrim($path, '/');
+        $path        = rtrim($path, '\\');
+        $path       .= DIRECTORY_SEPARATOR;
+        $classPrefix = rtrim($classPrefix, '_') . '_';
+        $this->addScriptPath($path . 'scripts');
+        $this->addFilterPath($path . 'filters', $classPrefix . 'Filter');
+        return $this;
+    }
+
 }
