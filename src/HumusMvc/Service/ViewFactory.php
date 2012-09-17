@@ -3,8 +3,11 @@
 namespace HumusMvc\Service;
 
 use HumusMvc\Application;
+use HumusMvc\View as View;
+use Zend\ServiceManager\Exception\InvalidArgumentException;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend_Controller_Action_HelperBroker as ControllerActionHelper;
 
 /**
  * @category   Zend
@@ -14,6 +17,13 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class ViewFactory implements FactoryInterface
 {
 
+    /**
+     * Create view service
+     *
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return View
+     * @throws InvalidArgumentException
+     */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         // handle configuration
@@ -22,6 +32,9 @@ class ViewFactory implements FactoryInterface
 
         $className = isset($viewConfig['classname']) ? $viewConfig['classname'] : 'HumusMvc\View';
         $view = new $className($viewConfig);
+        if (!$view instanceof View) {
+            throw new InvalidArgumentException('View object must extend HumusMvc\View');
+        }
         $view->setPluginLoader($serviceLocator->get('ViewHelperManager'), 'helper');
 
         if (isset($viewConfig['doctype'])) {
@@ -40,8 +53,7 @@ class ViewFactory implements FactoryInterface
         }
 
         if (isset($viewConfig['useViewRenderer']) && true === (bool) $viewConfig['useViewRenderer']) {
-            $viewRenderer = \Zend_Controller_Action_HelperBroker::getStaticHelper('viewRenderer');
-            /* @var $viewRenderer \Zend_Controller_Action_Helper_ViewRenderer */
+            $viewRenderer = ControllerActionHelper::getStaticHelper('viewRenderer');
             $viewRenderer->setView($view);
         }
         return $view;

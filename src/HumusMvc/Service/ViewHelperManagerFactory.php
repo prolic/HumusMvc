@@ -9,8 +9,8 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend_View_Helper_Interface as ViewHelperInterface;
 
 /**
- * @category   Zend
- * @package    Zend_Mvc
+ * @category Humus
+ * @package HumusMvc
  * @subpackage Service
  */
 class ViewHelperManagerFactory extends AbstractPluginManagerFactory
@@ -22,7 +22,6 @@ class ViewHelperManagerFactory extends AbstractPluginManagerFactory
      *
      * @param  ServiceLocatorInterface $serviceLocator
      * @return ViewHelperInterface
-     * @throws Exception\RuntimeException
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {

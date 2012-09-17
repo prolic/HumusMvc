@@ -6,6 +6,11 @@ use HumusMvc\Controller\Action\Helper\ViewRenderer;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
+/**
+ * @category Humus
+ * @package HumusMvc
+ * @subpackage Service
+ */
 class FrontControllerFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $serviceLocator)

@@ -16,6 +16,10 @@ use Zend_View_Helper_Interface as ViewHelperInterface;
  * Enforces that helpers retrieved are instances of
  * Helper\HelperInterface. Additionally, it registers a number of default
  * helpers.
+ *
+ * @category   Humus
+ * @package    HumusMvc
+ * @subpackage View
  */
 class HelperPluginManager extends AbstractPluginManager implements PluginLoaderInterface
 {
@@ -30,38 +34,57 @@ class HelperPluginManager extends AbstractPluginManager implements PluginLoaderI
         // basepath and url are not very useful without their factories, however the doctype
         // helper works fine as an invokable. The factory for doctype simply checks for the
         // config value from the merged config.
-        'doctype'             => 'Zend_View_Helper_Doctype', // overridden by a factory in ViewHelperManagerFactory
-        'basepath'            => 'Zend\View\Helper\BasePath',
-        'url'                 => 'Zend\View\Helper\Url',
-        'cycle'               => 'Zend\View\Helper\Cycle',
-        'declarevars'         => 'Zend\View\Helper\DeclareVars',
-        'escapehtml'          => 'Zend\View\Helper\EscapeHtml',
-        'escapehtmlattr'      => 'Zend\View\Helper\EscapeHtmlAttr',
-        'escapejs'            => 'Zend\View\Helper\EscapeJs',
-        'escapecss'           => 'Zend\View\Helper\EscapeCss',
-        'escapeurl'           => 'Zend\View\Helper\EscapeUrl',
-        'gravatar'            => 'Zend\View\Helper\Gravatar',
-        'headlink'            => 'Zend\View\Helper\HeadLink',
-        'headmeta'            => 'Zend_View_Helper_HeadMeta',
-        'headscript'          => 'Zend\View\Helper\HeadScript',
-        'headstyle'           => 'Zend\View\Helper\HeadStyle',
-        'headtitle'           => 'Zend\View\Helper\HeadTitle',
-        'htmlflash'           => 'Zend\View\Helper\HtmlFlash',
-        'htmllist'            => 'Zend\View\Helper\HtmlList',
-        'htmlobject'          => 'Zend\View\Helper\HtmlObject',
-        'htmlpage'            => 'Zend\View\Helper\HtmlPage',
-        'htmlquicktime'       => 'Zend\View\Helper\HtmlQuicktime',
-        'inlinescript'        => 'Zend\View\Helper\InlineScript',
-        'json'                => 'Zend\View\Helper\Json',
-        'layout'              => 'Zend\View\Helper\Layout',
-        'paginationcontrol'   => 'Zend\View\Helper\PaginationControl',
-        'partialloop'         => 'Zend\View\Helper\PartialLoop',
-        'partial'             => 'Zend\View\Helper\Partial',
-        'placeholder'         => 'Zend\View\Helper\Placeholder',
-        'renderchildmodel'    => 'Zend\View\Helper\RenderChildModel',
-        'rendertoplaceholder' => 'Zend\View\Helper\RenderToPlaceholder',
-        'serverurl'           => 'Zend\View\Helper\ServerUrl',
-        'viewmodel'           => 'Zend\View\Helper\ViewModel',
+        'action'              => 'Zend_View_Helper_Action',
+        'baseUrl'             => 'Zend_View_Helper_BaseUrl',
+        'currency'            => 'Zend_View_Helper_Currency',
+        'cycle'               => 'Zend_View_Helper_Cycle',
+        'declareVars'         => 'Zend_View_Helper_DeclareVars',
+        'doctype'             => 'Zend_View_Helper_Doctype',
+        'fieldset'            => 'Zend_View_Helper_Fieldset',
+        'form'                => 'Zend_View_Helper_Form',
+        'formButton'          => 'Zend_View_Helper_FormButton',
+        'formCheckbox'        => 'Zend_View_Helper_FormCheckbox',
+        'formElement'         => 'Zend_View_Helper_FormElement',
+        'formErrors'          => 'Zend_View_Helper_FormErrors',
+        'formFile'            => 'Zend_View_Helper_FormFile',
+        'formHidden'          => 'Zend_View_Helper_FormHidden',
+        'formImage'           => 'Zend_View_Helper_FormImage',
+        'formLabel'           => 'Zend_View_Helper_FormLabel',
+        'formMultiCheckbox'   => 'Zend_View_Helper_FormMultiCheckbox',
+        'formNote'            => 'Zend_View_Helper_FormNote',
+        'formPassword'        => 'Zend_View_Helper_FormPassword',
+        'formRadio'           => 'Zend_View_Helper_FormRadio',
+        'formReset'           => 'Zend_View_Helper_FormReset',
+        'formSelect'          => 'Zend_View_Helper_FormSelect',
+        'formSubmit'          => 'Zend_View_Helper_FormSubmit',
+        'formText'            => 'Zend_View_Helper_FormText',
+        'formTextarea'        => 'Zend_View_Helper_FormTextarea',
+        'Gravatar'            => 'Zend_View_Helper_Gravatar',
+        'headLink'            => 'Zend_View_Helper_HeadLink',
+        'headMeta'            => 'Zend_View_Helper_HeadMeta',
+        'headScript'          => 'Zend_View_Helper_HeadScript',
+        'headStyle'           => 'Zend_View_Helper_HeadStyle',
+        'headTitle'           => 'Zend_View_Helper_HeadTitle',
+        'htmlElement'         => 'Zend_View_Helper_HtmlElement',
+        'htmlFlash'           => 'Zend_View_Helper_HtmlFlash',
+        'htmlList'            => 'Zend_View_Helper_HtmlList',
+        'htmlObject'          => 'Zend_View_Helper_HtmlObject',
+        'htmlPage'            => 'Zend_View_Helper_HtmlPage',
+        'htmlQuicktime'       => 'Zend_View_Helper_HtmlQuicktime',
+        'inlineScript'        => 'Zend_View_Helper_InlineScript',
+        'json'                => 'Zend_View_Helper_Json',
+        'layout'              => 'Zend_View_Helper_Layout',
+        'navigation'          => 'Zend_View_Helper_Navigation', // overridden by a factory in ViewHelperManagerFactory
+        'paginationControl'   => 'Zend_View_Helper_PaginationControl',
+        'partial'             => 'Zend_View_Helper_Partial',
+        'partialLoop'         => 'Zend_View_Helper_PartialLoop',
+        'placeHolder'         => 'Zend_View_Helper_PlaceHolder',
+        'renderToPlaceholder' => 'Zend_View_Helper_RenderToPlaceholder',
+        'serverUrl'           => 'Zend_View_Helper_ServerUrl',
+        'tinySrc'             => 'Zend_View_Helper_TinySrc',
+        'translate'           => 'Zend_View_Helper_Translate', // overridden by a factory in ViewHelperManagerFactory
+        'url'                 => 'Zend_View_Helper_Url',
+        'userAgent'           => 'Zend_View_Helper_UserAgent'
     );
 
     /**

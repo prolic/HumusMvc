@@ -3,7 +3,13 @@
 namespace HumusMvc;
 
 use HumusMvc\View\HelperPluginManager;
+use Zend_Loader_PluginLoader_Interface as PluginLoader;
+use Zend_View_Exception as ViewException;
 
+/**
+ * @category   Humus
+ * @package    HumusMvc
+ */
 class View extends \Zend_View
 {
     /**
@@ -21,16 +27,17 @@ class View extends \Zend_View
     /**
      * Set plugin loader for a particular plugin type
      *
-     * @param  \Zend_Loader_PluginLoaderInterface $loader
+     * @param  PluginLoader $loader
      * @param  string $type
      * @return View
+     * @throws ViewException
      */
-    public function setPluginLoader(\Zend_Loader_PluginLoader_Interface $loader, $type)
+    public function setPluginLoader(PluginLoader $loader, $type)
     {
         $type = strtolower($type);
         if (!in_array($type, $this->_loaderTypes)) {
             // require_once 'Zend/View/Exception.php';
-            $e = new \Zend_View_Exception(sprintf('Invalid plugin loader type "%s"', $type));
+            $e = new ViewException(sprintf('Invalid plugin loader type "%s"', $type));
             $e->setView($this);
             throw $e;
         }
@@ -45,13 +52,14 @@ class View extends \Zend_View
      * Retrieve plugin loader for a specific plugin type
      *
      * @param  string $type
-     * @return \Zend_Loader_PluginLoader_Interface
+     * @return PluginLoader
+     * @throws ViewException
      */
     public function getPluginLoader($type)
     {
         $type = strtolower($type);
         if (!in_array($type, $this->_loaderTypes)) {
-            $e = new \Zend_View_Exception(sprintf('Invalid plugin loader type "%s"; cannot retrieve', $type));
+            $e = new ViewException(sprintf('Invalid plugin loader type "%s"; cannot retrieve', $type));
             $e->setView($this);
             throw $e;
         }
