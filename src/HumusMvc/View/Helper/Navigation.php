@@ -4,7 +4,10 @@ namespace HumusMvc\View\Helper;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
+use Zend_Navigation as ZendNavigation;
+use Zend_View_Exception as ViewException;
 use Zend_View_Helper_Navigation as NavigationViewHelper;
+use Zend_View_Helper_Navigation_Helper as NavigationViewHelperHelper;
 
 /**
  * @category Humus
@@ -79,7 +82,7 @@ class Navigation extends NavigationViewHelper implements ServiceLocatorAwareInte
     /**
      * Get container
      *
-     * @return \Zend_Navigation|\Zend_Navigation_Container
+     * @return ZendNavigation|\Zend_Navigation_Container
      */
     public function getContainer()
     {
@@ -90,7 +93,7 @@ class Navigation extends NavigationViewHelper implements ServiceLocatorAwareInte
                 $this->_container = $serviceLocator->get('Navigation');
             } else {
                 // nothing found in service locator, create new container
-                $this->_container = new Zend_Navigation();
+                $this->_container = new ZendNavigation();
             }
         }
 
@@ -158,4 +161,43 @@ class Navigation extends NavigationViewHelper implements ServiceLocatorAwareInte
         return $this->_role;
     }
 
+    /**
+     * Find helper
+     *
+     * @param string $proxy
+     * @param bool $strict
+     * @return null|NavigationViewHelperHelper
+     * @throws ViewException
+     */
+    public function findHelper($proxy, $strict = true)
+    {
+        if (isset($this->_helpers[$proxy])) {
+            return $this->_helpers[$proxy];
+        }
+
+        if (!$strict) {
+            if (!$this->getPluginManager()->has($proxy)) {
+                return null;
+            }
+        }
+        $helper = $this->getPluginManager()->get($proxy);
+
+        if (!$helper instanceof NavigationViewHelperHelper) {
+            if ($strict) {
+                $e = new ViewException(sprintf(
+                    'Proxy helper "%s" is not an instance of ' .
+                        'Zend_View_Helper_Navigation_Helper',
+                    get_class($helper)));
+                $e->setView($this->view);
+                throw $e;
+            }
+
+            return null;
+        }
+
+        $this->_inject($helper);
+        $this->_helpers[$proxy] = $helper;
+
+        return $helper;
+    }
 }
