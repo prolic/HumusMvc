@@ -30,10 +30,7 @@ class HelperPluginManager extends AbstractPluginManager implements PluginLoaderI
      * @var array
      */
     protected $invokableClasses = array(
-        // basepath, doctype, and url are set up as factories in the ViewHelperManagerFactory.
-        // basepath and url are not very useful without their factories, however the doctype
-        // helper works fine as an invokable. The factory for doctype simply checks for the
-        // config value from the merged config.
+        'navigation'          => 'HumusMvc\View\Helper\Navigation',
         'action'              => 'Zend_View_Helper_Action',
         'baseUrl'             => 'Zend_View_Helper_BaseUrl',
         'currency'            => 'Zend_View_Helper_Currency',
@@ -59,7 +56,7 @@ class HelperPluginManager extends AbstractPluginManager implements PluginLoaderI
         'formSubmit'          => 'Zend_View_Helper_FormSubmit',
         'formText'            => 'Zend_View_Helper_FormText',
         'formTextarea'        => 'Zend_View_Helper_FormTextarea',
-        'Gravatar'            => 'Zend_View_Helper_Gravatar',
+        'gravatar'            => 'Zend_View_Helper_Gravatar',
         'headLink'            => 'Zend_View_Helper_HeadLink',
         'headMeta'            => 'Zend_View_Helper_HeadMeta',
         'headScript'          => 'Zend_View_Helper_HeadScript',
@@ -74,7 +71,6 @@ class HelperPluginManager extends AbstractPluginManager implements PluginLoaderI
         'inlineScript'        => 'Zend_View_Helper_InlineScript',
         'json'                => 'Zend_View_Helper_Json',
         'layout'              => 'Zend_View_Helper_Layout',
-        'navigation'          => 'Zend_View_Helper_Navigation', // overridden by a factory in ViewHelperManagerFactory
         'paginationControl'   => 'Zend_View_Helper_PaginationControl',
         'partial'             => 'Zend_View_Helper_Partial',
         'partialLoop'         => 'Zend_View_Helper_PartialLoop',
@@ -83,6 +79,7 @@ class HelperPluginManager extends AbstractPluginManager implements PluginLoaderI
         'serverUrl'           => 'Zend_View_Helper_ServerUrl',
         'tinySrc'             => 'Zend_View_Helper_TinySrc',
         'translate'           => 'Zend_View_Helper_Translate', // overridden by a factory in ViewHelperManagerFactory
+                                                               // if translator is created by service locator
         'url'                 => 'Zend_View_Helper_Url',
         'userAgent'           => 'Zend_View_Helper_UserAgent'
     );

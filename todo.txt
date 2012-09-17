@@ -5,6 +5,8 @@ TODO LIST:
 - add possibility to use action helpers with service manager
 - add possibility to use controller plugins with service manager [DONE]
 - add tests
+- document recommended translator usage with service locator under key "Translator"
+- document REQUIRED service locator configuration with key: "Acl", "AclRole" & "Navigation"
 - document view params
 - document front controller params:
 
