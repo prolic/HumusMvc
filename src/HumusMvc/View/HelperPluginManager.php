@@ -29,7 +29,6 @@ class HelperPluginManager extends AbstractPluginManager implements PluginLoaderI
      * @var array
      */
     protected $invokableClasses = array(
-        'navigation'          => 'HumusMvc\View\Helper\Navigation',
         'action'              => 'Zend_View_Helper_Action',
         'baseUrl'             => 'Zend_View_Helper_BaseUrl',
         'currency'            => 'Zend_View_Helper_Currency',
@@ -70,6 +69,12 @@ class HelperPluginManager extends AbstractPluginManager implements PluginLoaderI
         'inlineScript'        => 'Zend_View_Helper_InlineScript',
         'json'                => 'Zend_View_Helper_Json',
         'layout'              => 'Zend_View_Helper_Layout',
+        'navigation'          => 'Zend_View_Helper_Navigation', // overridden in constructor,
+                                                                // if following services are configures in service manager:
+                                                                // - Navigation - a Zend_Navigation_Container
+                                                                // - Translator (optionally for translation)
+                                                                // - Acl (optionally for Acl)
+                                                                // - AclRole (optionally for Acl)
         'paginationControl'   => 'Zend_View_Helper_PaginationControl',
         'partial'             => 'Zend_View_Helper_Partial',
         'partialLoop'         => 'Zend_View_Helper_PartialLoop',
@@ -78,7 +83,7 @@ class HelperPluginManager extends AbstractPluginManager implements PluginLoaderI
         'serverUrl'           => 'Zend_View_Helper_ServerUrl',
         'tinySrc'             => 'Zend_View_Helper_TinySrc',
         'translate'           => 'Zend_View_Helper_Translate', // overridden by a factory in ViewHelperManagerFactory
-                                                               // if translator is created by service locator
+        // if translator is created by service locator
         'url'                 => 'Zend_View_Helper_Url',
         'userAgent'           => 'Zend_View_Helper_UserAgent'
     );
@@ -100,6 +105,9 @@ class HelperPluginManager extends AbstractPluginManager implements PluginLoaderI
     {
         parent::__construct($configuration);
         $this->addInitializer(array($this, 'injectView'));
+        if ($this->has('Navigation')) {
+            $this->setInvokableClass('navigation', 'HumusMvc\View\Helper\Navigation');
+        }
     }
 
     /**

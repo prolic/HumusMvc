@@ -90,11 +90,12 @@ class Navigation extends NavigationViewHelper implements ServiceLocatorAwareInte
             // try to fetch from service locator first
             $serviceLocator = $this->getServiceLocator();
             if ($serviceLocator->has('Navigation')) {
-                $this->_container = $serviceLocator->get('Navigation');
+                $navigationContainer = $serviceLocator->get('Navigation');
             } else {
                 // nothing found in service locator, create new container
-                $this->_container = new ZendNavigation();
+                $navigationContainer = new ZendNavigation;
             }
+            $this->setContainer($navigationContainer);
         }
 
         return $this->_container;
