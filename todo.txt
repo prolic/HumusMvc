@@ -3,9 +3,21 @@ TODO LIST:
 - add public function onBootstrap($event) in HumusMvc\View
   (service listener waits for "view_helpers" in config in "bootstrap" event, the data will be passed by the event.
    when the viewmanager gets instantiated, it checks the given events, and so we have custom view helpers with configuration)
-- add possibility to add custom view helpers
+
+   key: "view_helpers"
+   interface: "Zend\ModuleManager\Feature\ViewHelperProviderInterface"
+   method: "getViewHelperConfig"
+
+   same for action helpers:
+
+   key: "action_helpers"
+   interface: "HumusMvc\ModuleManager\Feature\ActionHelperProviderInterface"
+   method: "getActionHelperConfig"
+
+- add possibility to add custom view helpers [DONE]
+- add possibility to add custom action helpers [DONE]
 - add possibility to use view helpers with service manager [DONE]
-- add possibility to use action helpers with service manager
+- add possibility to use action helpers with service manager [DONE]
 - add possibility to use controller plugins with service manager [DONE]
 - add tests
 - document recommended translator usage with service locator under key "Translator"

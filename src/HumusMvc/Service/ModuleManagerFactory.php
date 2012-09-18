@@ -47,6 +47,18 @@ class ModuleManagerFactory implements FactoryInterface
             'Zend\ModuleManager\Feature\ServiceProviderInterface',
             'getServiceConfig'
         );
+        $serviceListener->addServiceManager(
+            'ViewHelperManager',
+            'view_helpers',
+            'Zend\ModuleManager\Feature\ViewHelperProviderInterface',
+            'getViewHelperConfig'
+        );
+        $serviceListener->addServiceManager(
+            'ActionHelperManager',
+            'action_helpers',
+            'HumusMvc\ModuleManager\Feature\ActionHelperProviderInterface',
+            'getActionHelperConfig'
+        );
 
         $events = $serviceLocator->get('EventManager');
         $events->attach($defaultListeners);

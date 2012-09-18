@@ -3,9 +3,8 @@
 namespace HumusMvc\View;
 
 use HumusMvc\Exception;
-use Zend\ServiceManager\AbstractPluginManager;
+use HumusMvc\Service\AbstractPluginManager;
 use Zend\ServiceManager\ConfigInterface;
-use Zend\ServiceManager\Exception\ServiceNotFoundException;
 use Zend_Loader_PluginLoader_Interface as PluginLoaderInterface;
 use Zend_View_Interface as ViewInterface;
 use Zend_View_Helper_Interface as ViewHelperInterface;
@@ -157,68 +156,9 @@ class HelperPluginManager extends AbstractPluginManager implements PluginLoaderI
         }
 
         throw new Exception\RuntimeException(sprintf(
-            'Plugin of type %s is invalid; must implement %s\Helper\HelperInterface',
-            (is_object($plugin) ? get_class($plugin) : gettype($plugin)),
-            __NAMESPACE__
+            'Plugin of type %s is invalid; must implement Zend_View_Helper_Interface',
+            (is_object($plugin) ? get_class($plugin) : gettype($plugin))
         ));
     }
-
-    /**
-     * Add prefixed paths to the registry of paths
-     *
-     * @param string $prefix
-     * @param string $path
-     * @throws Exception\UnsupportedMethodCallException
-     */
-    public function addPrefixPath($prefix, $path)
-    {
-        throw new Exception\UnsupportedMethodCallException('method addPrefixPath() is not supported in ' . __CLASS__);
-    }
-
-    /**
-     * Remove a prefix (or prefixed-path) from the registry
-     *
-     * @param string $prefix
-     * @param string $path OPTIONAL
-     * @throws Exception\UnsupportedMethodCallException
-     */
-    public function removePrefixPath($prefix, $path = null)
-    {
-        throw new Exception\UnsupportedMethodCallException('method removePrefixPath() is not supported in ' . __CLASS__);
-    }
-
-    /**
-     * Whether or not a Helper by a specific name
-     *
-     * @param string $name
-     * @throws Exception\UnsupportedMethodCallException
-     */
-    public function isLoaded($name)
-    {
-        throw new Exception\UnsupportedMethodCallException('method isLoaded() is not supported in ' . __CLASS__);
-    }
-
-    /**
-     * Return full class name for a named helper
-     *
-     * @param string $name
-     * @throws Exception\UnsupportedMethodCallException
-     */
-    public function getClassName($name)
-    {
-        throw new Exception\UnsupportedMethodCallException('method getClassName() is not supported in ' . __CLASS__);
-    }
-
-    /**
-     * Load a helper via the name provided
-     *
-     * @param string $name
-     * @return string
-     */
-    public function load($name)
-    {
-        return $this->get($name);
-    }
-
 
 }

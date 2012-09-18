@@ -91,10 +91,8 @@ class FrontControllerFactory implements FactoryInterface
             $frontController->setDefaultControllerName($frontControllerConfig['default_controller_name']);
         }
 
-        // set view renderer in action helper broker
-        $viewRenderer = new ViewRenderer();
-        $viewRenderer->setServiceLocator($serviceLocator);
-        \Zend_Controller_Action_HelperBroker::addHelper($viewRenderer);
+        // set action helper plugin manager
+        \Zend_Controller_Action_HelperBroker::setPluginLoader($serviceLocator->get('ActionHelperManager'));
 
         return $frontController;
     }
