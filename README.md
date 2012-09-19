@@ -96,7 +96,7 @@ Sample front controller configuration in module.config.php:
     );
 
 controller_directory: Key = "ModuleName", Value = "Path to controllers in that module"
-plugins: Key = "PluginName", Value = "PluginClass or array (class and stack_index) - if a plugin is registred in service locator, the plugin will be loaded from service locator, otherwise it will simply be instantiated with "new".
+plugins: Key = "PluginName", Value = "PluginClass" or array (class and stack_index) - if a plugin is registred in service locator, the plugin will be loaded from service locator, otherwise it will simply be instantiated with "new".
 base_url, params, module_controller_directory_name, etc. are default config keys for the front controller
 
 A special plugin loader (HumusMvc\Controller\Action\HelperPluginManager) will get injected into the action controller object.
