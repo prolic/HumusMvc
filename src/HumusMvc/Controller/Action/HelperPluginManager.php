@@ -1,6 +1,6 @@
 <?php
 
-namespace HumusMvc\Controller\Action\Helper;
+namespace HumusMvc\Controller\Action;
 
 use HumusMvc\Exception;
 use HumusMvc\Service\AbstractPluginManager;
