@@ -26,17 +26,17 @@ Features / Goals
 
  - add possibility to add custom view helpers with service listener [COMPLETE]
  - add possibility to add custom action helpers with service listener [COMPLETE]
- - add possibility to use view helpers with service manager [COMPLETE]
- - add possibility to use action helpers with service manager [COMPLETE]
- - add possibility to use controller plugins with service manager [COMPLETE]
- - configure Zend_Controller_Front with service manager [COMPLETE}
+ - add possibility to use view helpers with service locator [COMPLETE]
+ - add possibility to use action helpers with service locator [COMPLETE]
+ - add possibility to use controller plugins with service locator [COMPLETE]
+ - configure Zend_Controller_Front with service locator [COMPLETE}
  - add tests [INCOMPLETE]
 
 View Helpers
 ------------
 
 - When a Zend_Translate or Zend_Translate_Adapter object is known in service locator with the key "Translator", the Zend_View_Helper_Translate will get the translator injected. No need for putting Zend_Translate in Zend_Registry.
-- When a Zend_Navigation or Zend_Navigation_Container object is known in service locator with the key "Navigation", a custom HumusMvc\View\Helper\Navigation is used. This special view helper will check the service locator for the navigation object, additionally, if additional Zend_Acl is available with key "Acl" and Zend_Acl_Role_Interface is available with key "AclRole", both get injected in navigation view helper, too. Same for translator under key "Translator". If nothing is known in service manager, the default Zend_View_Helper_Navigation will be used.
+- When a Zend_Navigation or Zend_Navigation_Container object is known in service locator with the key "Navigation", a custom HumusMvc\View\Helper\Navigation is used. This special view helper will check the service locator for the navigation object, additionally, if additional Zend_Acl is available with key "Acl" and Zend_Acl_Role_Interface is available with key "AclRole", both get injected in navigation view helper, too. Same for translator under key "Translator". If nothing is known in service locator, the default Zend_View_Helper_Navigation will be used.
 - can be configured with module manager:
   module config key: "view_helpers"
   interface for module class: "Zend\ModuleManager\Feature\ViewHelperProviderInterface"
