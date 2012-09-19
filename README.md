@@ -35,8 +35,8 @@ Features / Goals
 View Helpers
 ------------
 
-- When a Zend_Translate or Zend_Translate_Adapter object is known in service manager with the key "Translator", the Zend_View_Helper_Translate will get the translator injected. No need for putting Zend_Translate in Zend_Registry.
-- When a Zend_Navigation or Zend_Navigation_Container object is known in "Navigation" with the key "Navigation", a custom HumusMvc\View\Helper\Navigation is used. This special view helper will check the service locator for the navigation object, additionally, if additional Zend_Acl is available with key "Acl" and Zend_Acl_Role_Interface is available with key "AclRole", both get injected in navigation view helper, too. Same for translator under key "Translator". If nothing is known in service manager, the default Zend_View_Helper_Navigation will be used.
+- When a Zend_Translate or Zend_Translate_Adapter object is known in service locator with the key "Translator", the Zend_View_Helper_Translate will get the translator injected. No need for putting Zend_Translate in Zend_Registry.
+- When a Zend_Navigation or Zend_Navigation_Container object is known in service locator with the key "Navigation", a custom HumusMvc\View\Helper\Navigation is used. This special view helper will check the service locator for the navigation object, additionally, if additional Zend_Acl is available with key "Acl" and Zend_Acl_Role_Interface is available with key "AclRole", both get injected in navigation view helper, too. Same for translator under key "Translator". If nothing is known in service manager, the default Zend_View_Helper_Navigation will be used.
 - can be configured with module manager:
   module config key: "view_helpers"
   interface for module class: "Zend\ModuleManager\Feature\ViewHelperProviderInterface"
