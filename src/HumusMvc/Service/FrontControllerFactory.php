@@ -3,6 +3,7 @@
 namespace HumusMvc\Service;
 
 use HumusMvc\Controller\Action\Helper\ViewRenderer;
+use HumusMvc\Exception;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -13,6 +14,13 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 class FrontControllerFactory implements FactoryInterface
 {
+    /**
+     * Create front controller service
+     *
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return \Zend_Controller_Front
+     * @throws Exception\RuntimeException
+     */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $frontController = \Zend_Controller_Front::getInstance();
@@ -32,6 +40,9 @@ class FrontControllerFactory implements FactoryInterface
 
         // handle configuration
         $config = $serviceLocator->get('Config');
+        if (!isset($config['front_controller'])) {
+            throw new Exception\RuntimeException('No front controller configuration found.');
+        }
         $frontControllerConfig = $config['front_controller'];
 
         if (isset ($frontControllerConfig['controller_directory'])) {
