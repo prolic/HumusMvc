@@ -37,10 +37,7 @@ View Helpers
 
 - When a Zend_Translate or Zend_Translate_Adapter object is known in service locator with the key "Translator", the Zend_View_Helper_Translate will get the translator injected. No need for putting Zend_Translate in Zend_Registry.
 - When a Zend_Navigation or Zend_Navigation_Container object is known in service locator with the key "Navigation", a custom HumusMvc\View\Helper\Navigation is used. This special view helper will check the service locator for the navigation object, additionally, if additional Zend_Acl is available with key "Acl" and Zend_Acl_Role_Interface is available with key "AclRole", both get injected in navigation view helper, too. Same for translator under key "Translator". If nothing is known in service locator, the default Zend_View_Helper_Navigation will be used.
-- can be configured with module manager:
-  module config key: "view_helpers"
-  interface for module class: "Zend\ModuleManager\Feature\ViewHelperProviderInterface"
-  method in module class: "getViewHelperConfig"
+- can be configured with module manager: module config key "view_helpers", interface for module class "Zend\ModuleManager\Feature\ViewHelperProviderInterface" and method in module class "getViewHelperConfig"
 
 
 View Configuration
@@ -104,7 +101,4 @@ base_url, params, module_controller_directory_name, etc. are default config keys
 
 A special plugin loader (HumusMvc\Controller\Action\HelperPluginManager) will get injected into the action controller object.
 
-Action helpers can be configures by module manager:
-module config key: "action_helpers"
-interface for module class: "HumusMvc\ModuleManager\Feature\ActionHelperProviderInterface"
-method in module class: "getActionHelperConfig"
+Action helpers can be configures by module manager: module config key "action_helpers", interface for module class "HumusMvc\ModuleManager\Feature\ActionHelperProviderInterface" and method in module class "getActionHelperConfig"
