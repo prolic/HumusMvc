@@ -32,7 +32,7 @@ class FrontControllerFactory implements FactoryInterface
 
         // handle configuration
         $config = $serviceLocator->get('Config');
-        $frontControllerConfig = $config['service_manager']['front_controller'];
+        $frontControllerConfig = $config['front_controller'];
 
         if (isset ($frontControllerConfig['controller_directory'])) {
             $frontController->setControllerDirectory($frontControllerConfig['controller_directory']);
