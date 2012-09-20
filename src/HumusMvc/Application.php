@@ -4,7 +4,6 @@ namespace HumusMvc;
 
 use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManagerInterface;
-use Zend\ModuleManager\ModuleManagerInterface;
 use HumusMvc\Service\ServiceManagerConfig;
 use Zend\ServiceManager\ServiceManager;
 use Zend_Controller_Request_Abstract as Request;
@@ -241,6 +240,7 @@ class Application implements
             );
         }
         $response = $front->dispatch();
+
         if ($front->returnResponse()) {
             return $response;
         }

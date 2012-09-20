@@ -8,6 +8,7 @@ use Traversable;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
 use Zend\ModuleManager\ModuleEvent;
+use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\ArrayUtils;
 
 /**
@@ -22,12 +23,27 @@ class ViewListener implements ListenerAggregateInterface
     /**
      * @var array
      */
-    protected $config = array();
+    protected $configs = array();
 
     /**
      * @var array
      */
-    protected $listeners = arraY();
+    protected $listeners = array();
+
+    /**
+     * @var ServiceManager
+     */
+    protected $serviceManager;
+
+    /**
+     * Constructor
+     *
+     * @param ServiceManager $serviceManager
+     */
+    public function __construct(ServiceManager $serviceManager)
+    {
+        $this->serviceManager = $serviceManager;
+    }
 
     /**
      * @param  EventManagerInterface $events
@@ -90,7 +106,7 @@ class ViewListener implements ListenerAggregateInterface
         // The actual merging takes place later. Doing it this way will
         // enable us to provide more powerful debugging tools for
         // showing which modules overrode what.
-        $this->config[$e->getModuleName()] = $viewConfig;
+        $this->configs[$e->getModuleName()] = $viewConfig;
     }
 
     /**
@@ -101,14 +117,17 @@ class ViewListener implements ListenerAggregateInterface
      */
     public function onLoadModulesPost(ModuleEvent $e)
     {
-        $appConfig = $e->getConfigListener()->getMergedConfig(false);
+        $serviceManager = $this->serviceManager;
+        $appConfig = $serviceManager->get('Config');
         if (!isset($appConfig['view'])) {
             $appConfig['view'] = array();
         }
-        foreach ($this->config as $config) {
-            $appConfig['view'] = ArrayUtils::merge($appConfig['view'], $config);
+        foreach ($this->configs as $config) {
+            $appConfig['view'] = ArrayUtils::merge($config, $appConfig['view']);
         }
-        $e->getConfigListener()->setMergedConfig($appConfig);
+        $serviceManager->setAllowOverride(true);
+        $serviceManager->setService('Config', $appConfig);
+        $serviceManager->setAllowOverride(false);
     }
 
 }

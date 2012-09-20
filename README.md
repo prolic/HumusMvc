@@ -32,6 +32,7 @@ Features / Goals
  - configure Zend_Controller_Front with service locator [COMPLETE}
  - add tests [INCOMPLETE]
  - add front controller listener and view listener [INCOMPLETE]
+ - test front controller provider is less important config
 
 View Helpers
 ------------
@@ -77,15 +78,10 @@ Sample front controller configuration in module.config.php:
                 'disableOutputBuffering' => true
             ),
             'plugins' => array(
-                'localeSwitcher' => 'Application\Plugin\LocaleSwitcher\LocaleSwitcher',
-                'unitSwitcher' => 'Application\Plugin\UnitSwitcher\UnitSwitcher',
-                'logIn' => array(
-                    'class' => 'Application\Plugin\LogIn\LogIn',
-                    'stack_index' => '111',
-                ),
-                'thruLogIn' => array(
-                    'class' => 'Application\Plugin\ThruLogIn\ThruLogIn',
-                    'stack_index' => 98
+                'actionStack' => 'Zend_Controller_Plugin_ActionStack',
+                'putHandler' => array(
+                    'class' => 'Zend_Controller_Plugin_PutHandler',
+                    'stack_index' => 10
                 ),
             ),
             'throw_exceptions' => false,
