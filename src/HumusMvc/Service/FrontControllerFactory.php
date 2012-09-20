@@ -6,6 +6,8 @@ use HumusMvc\Controller\Action\Helper\ViewRenderer;
 use HumusMvc\Exception;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\Stdlib\ArrayUtils;
+use Zend_Controller_Front as FrontController;
 
 /**
  * @category Humus
@@ -15,91 +17,74 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class FrontControllerFactory implements FactoryInterface
 {
     /**
+     * @var array
+     */
+    protected $defaultOptions = array(
+        'controller_directory' => array(),
+        'module_controller_directory_name' => 'controllers',
+        'base_url' => null,
+        'throw_exceptions' => false,
+        'return_response' => false,
+        'default_module' => 'default',
+        'default_controller_name' => 'index',
+        'default_action' => 'index',
+        'params' => array(
+            'displayExceptions' => false,
+            'disableOutputBuffering' => true
+        ),
+        'plugins' => array()
+    );
+
+    /**
      * Create front controller service
      *
      * @param ServiceLocatorInterface $serviceLocator
-     * @return \Zend_Controller_Front
+     * @return FrontController
      * @throws Exception\RuntimeException
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $frontController = \Zend_Controller_Front::getInstance();
+        $frontController = FrontController::getInstance();
 
         // handle injections
-        $dispatcher = $serviceLocator->get('Dispatcher');
-        $frontController->setDispatcher($dispatcher);
+        $frontController->setDispatcher($serviceLocator->get('Dispatcher'));
+        $frontController->setRequest($serviceLocator->get('Request'));
+        $frontController->setResponse($serviceLocator->get('Response'));
+        $frontController->setRouter($serviceLocator->get('Router'));
 
-        $request = $serviceLocator->get('Request');
-        $frontController->setRequest($request);
-
-        $response = $serviceLocator->get('Response');
-        $frontController->setResponse($response);
-
-        $router = $serviceLocator->get('Router');
-        $frontController->setRouter($router);
+        // get config
+        $config = $serviceLocator->get('Config');
+        if (isset($config['front_controller'])) {
+            $config = ArrayUtils::merge($this->defaultOptions, $config['front_controller']);
+        } else {
+            $config = $this->defaultOptions;
+        }
 
         // handle configuration
-        $config = $serviceLocator->get('Config');
-        if (!isset($config['front_controller'])) {
-            throw new Exception\RuntimeException('No front controller configuration found.');
-        }
-        $frontControllerConfig = $config['front_controller'];
-
-        if (isset ($frontControllerConfig['controller_directory'])) {
-            $frontController->setControllerDirectory($frontControllerConfig['controller_directory']);
-        }
-
-        if (isset($frontControllerConfig['module_controller_directory_name'])) {
-            $frontController->setModuleControllerDirectoryName($frontControllerConfig['module_controller_directory_name']);
-        }
-
-        if (isset($frontControllerConfig['base_url'])) {
-            $frontController->setBaseUrl($frontControllerConfig['base_url']);
-        }
-
-        if (isset($frontControllerConfig['params'])) {
-            foreach ($frontControllerConfig['params'] as $key => $param) {
-                $frontController->setParam($key, $param);
+        $frontController->setModuleControllerDirectoryName($config['module_controller_directory_name']);
+        $frontController->setBaseUrl($config['base_url']);
+        $frontController->setControllerDirectory($config['controller_directory']);
+        $frontController->throwExceptions($config['throw_exceptions']);
+        $frontController->returnResponse($config['return_response']);
+        $frontController->setDefaultModule($config['default_module']);
+        $frontController->setDefaultAction($config['default_action']);
+        $frontController->setDefaultControllerName($config['default_controller_name']);
+        $frontController->setParams($config['params']);
+        foreach ($config['plugins'] as $plugin) {
+            if (is_array(($plugin))) {
+                $pluginClass = $plugin['class'];
+                $stackIndex = $plugin['stack_index'];
+            } else {
+                $pluginClass = $plugin;
+                $stackIndex = null;
             }
-        }
-
-        if (isset($frontControllerConfig['plugins'])) {
-            foreach ($frontControllerConfig['plugins'] as $plugin) {
-                if (is_array(($plugin))) {
-                    $pluginClass = $plugin['class'];
-                    $stackIndex = $plugin['stack_index'];
-                } else {
-                    $pluginClass = $plugin;
-                    $stackIndex = null;
-                }
-                // plugins can be loaded with service locator
-                if ($serviceLocator->has($pluginClass)) {
-                    $plugin = $serviceLocator->get($pluginClass);
-                } else {
-                    $plugin = new $pluginClass();
-                }
-                $frontController->registerPlugin($plugin, $stackIndex);
+            // plugins can be loaded with service locator
+            if ($serviceLocator->has($pluginClass)) {
+                $plugin = $serviceLocator->get($pluginClass);
+            } else {
+                $plugin = new $pluginClass();
             }
-        }
-
-        if (isset($frontControllerConfigr['throw_exceptions'])) {
-            $frontController->throwExceptions($frontControllerConfig['throw_exceptions']);
-        }
-
-        if (isset($frontControllerConfig['return_response'])) {
-            $frontController->returnResponse($frontControllerConfig['return_response']);
-        }
-
-        if (isset($frontControllerConfig['default_module'])) {
-            $frontController->setDefaultModule($frontControllerConfig['default_module']);
-        }
-
-        if (isset($frontControllerConfig['default_action'])) {
-            $frontController->setDefaultAction($frontControllerConfig['default_action']);
-        }
-
-        if (isset($frontControllerConfig['default_controller_name'])) {
-            $frontController->setDefaultControllerName($frontControllerConfig['default_controller_name']);
+            $frontController->registerPlugin($plugin, $stackIndex);
         }
 
         // set action helper plugin manager
