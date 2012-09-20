@@ -29,10 +29,9 @@ Features / Goals
  - add possibility to use view helpers with service locator [COMPLETE]
  - add possibility to use action helpers with service locator [COMPLETE]
  - add possibility to use controller plugins with service locator [COMPLETE]
- - configure Zend_Controller_Front with service locator [COMPLETE}
+ - configure Zend_Controller_Front with service locator [COMPLETE]
+ - add front controller listener and view listener [COMPLETE]
  - add tests [INCOMPLETE]
- - add front controller listener and view listener [INCOMPLETE]
- - test front controller provider is less important config
 
 View Helpers
 ------------
