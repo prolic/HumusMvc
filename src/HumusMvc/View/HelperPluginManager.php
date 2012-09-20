@@ -83,7 +83,7 @@ class HelperPluginManager extends AbstractPluginManager implements PluginLoaderI
         'serverUrl'           => 'Zend_View_Helper_ServerUrl',
         'tinySrc'             => 'Zend_View_Helper_TinySrc',
         'translate'           => 'Zend_View_Helper_Translate', // overridden by a factory in ViewHelperManagerFactory
-        // if translator is created by service locator
+                                                               // if translator is created by service locator
         'url'                 => 'Zend_View_Helper_Url',
         'userAgent'           => 'Zend_View_Helper_UserAgent'
     );
