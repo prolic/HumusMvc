@@ -3,6 +3,7 @@
 namespace HumusMvc\Service;
 
 use HumusMvc\ModuleManager\Listener\FrontControllerListener;
+use HumusMvc\ModuleManager\Listener\ViewListener;
 use Zend\ModuleManager\Listener\DefaultListenerAggregate;
 use Zend\ModuleManager\Listener\ListenerOptions;
 use Zend\ModuleManager\ModuleEvent;
@@ -40,7 +41,6 @@ class ModuleManagerFactory implements FactoryInterface
         $configuration    = $serviceLocator->get('ApplicationConfig');
         $listenerOptions  = new ListenerOptions($configuration['module_listener_options']);
         $defaultListeners = new DefaultListenerAggregate($listenerOptions);
-        $frontControllerListener = new FrontControllerListener();
         $serviceListener  = $serviceLocator->get('ServiceListener');
 
         $serviceListener->addServiceManager(
@@ -65,7 +65,8 @@ class ModuleManagerFactory implements FactoryInterface
         $events = $serviceLocator->get('EventManager');
         $events->attach($defaultListeners);
         $events->attach($serviceListener);
-        $events->attach($frontControllerListener);
+        $events->attach(new FrontControllerListener());
+        $events->attach(new ViewListener());
 
         $moduleEvent = new ModuleEvent;
         $moduleEvent->setParam('ServiceManager', $serviceLocator);
