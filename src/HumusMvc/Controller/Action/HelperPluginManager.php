@@ -24,7 +24,6 @@ class HelperPluginManager extends AbstractPluginManager
         'json'                      => 'Zend_Controller_Action_Helper_Json',
         'redirector'                => 'Zend_Controller_Action_Helper_Redirector',
         'url'                       => 'Zend_Controller_Action_Helper_Url',
-        'viewRenderer'              => 'HumusMvc\Controller\Action\Helper\ViewRenderer'
     );
 
     /**
@@ -49,4 +48,5 @@ class HelperPluginManager extends AbstractPluginManager
             (is_object($plugin) ? get_class($plugin) : gettype($plugin))
         ));
     }
+
 }
