@@ -88,7 +88,9 @@ class FrontControllerFactory implements FactoryInterface
         }
 
         // set action helper plugin manager
-        \Zend_Controller_Action_HelperBroker::setPluginLoader($serviceLocator->get('ActionHelperManager'));
+        $actionHelperManager = $serviceLocator->get('ActionHelperManager');
+        \Zend_Controller_Action_HelperBroker::setPluginLoader($actionHelperManager);
+        \Zend_Controller_Action_HelperBroker::addHelper($actionHelperManager->get('viewRenderer'));
 
         // start layout, if needed
         if (isset($appConfig['layout'])) {

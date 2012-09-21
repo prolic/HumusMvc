@@ -3,11 +3,10 @@
 namespace HumusMvc\Controller\Action\Helper;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend_Controller_Action_Exception;
 use Zend_Controller_Action_Helper_ViewRenderer as ZendViewRenderer;
 
-class ViewRenderer extends ZendViewRenderer implements ServiceLocatorAwareInterface
+class ViewRenderer extends ZendViewRenderer
 {
     /**
      * @var ServiceLocatorInterface

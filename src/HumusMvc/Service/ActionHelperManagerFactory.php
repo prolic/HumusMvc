@@ -29,7 +29,7 @@ class ActionHelperManagerFactory extends AbstractPluginManagerFactory
 
         $plugins->setFactory('viewRenderer', function($sm) use ($serviceLocator) {
             $renderer = new \HumusMvc\Controller\Action\Helper\ViewRenderer();
-            $renderer->setServiceLocator($sm);
+            $renderer->setServiceLocator($serviceLocator);
             return $renderer;
         });
 

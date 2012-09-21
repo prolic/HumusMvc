@@ -14,13 +14,13 @@ class HelperPluginManager extends AbstractPluginManager
      * @var array
      */
     protected $invokableClasses = array(
-        'actionStack'               => 'Zend_Controller_Action_Helper_ActionStack',
-        'ajaxContext'               => 'Zend_Controller_Action_Helper_AjaxContext',
-        'autoCompleteDojo'          => 'Zend_Controller_Action_Helper_AutoCompleteDojo',
-        'autoCompleteScriptaculous' => 'Zend_Controller_Action_Helper_AutoCompleteScriptaculous',
+        'actionstack'               => 'Zend_Controller_Action_Helper_ActionStack',
+        'ajaxcontext'               => 'Zend_Controller_Action_Helper_AjaxContext',
+        'autocompletedojo'          => 'Zend_Controller_Action_Helper_AutoCompleteDojo',
+        'autocompletescriptaculous' => 'Zend_Controller_Action_Helper_AutoCompleteScriptaculous',
         'cache'                     => 'Zend_Controller_Action_Helper_Cache',
-        'contextSwitch'             => 'Zend_Controller_Action_Helper_ContextSwitch',
-        'flashMessenger'            => 'Zend_Controller_Action_Helper_FlashMessenger',
+        'contextswitch'             => 'Zend_Controller_Action_Helper_ContextSwitch',
+        'flashmessenger'            => 'Zend_Controller_Action_Helper_FlashMessenger',
         'json'                      => 'Zend_Controller_Action_Helper_Json',
         'redirector'                => 'Zend_Controller_Action_Helper_Redirector',
         'url'                       => 'Zend_Controller_Action_Helper_Url',
