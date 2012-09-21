@@ -8,6 +8,7 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Stdlib\ArrayUtils;
 use Zend_Controller_Front as FrontController;
+use Zend_Layout as Layout;
 
 /**
  * @category Humus
@@ -40,7 +41,6 @@ class FrontControllerFactory implements FactoryInterface
      *
      * @param ServiceLocatorInterface $serviceLocator
      * @return FrontController
-     * @throws Exception\RuntimeException
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
@@ -53,9 +53,9 @@ class FrontControllerFactory implements FactoryInterface
         $frontController->setRouter($serviceLocator->get('Router'));
 
         // get config
-        $config = $serviceLocator->get('Config');
-        if (isset($config['front_controller'])) {
-            $config = ArrayUtils::merge($this->defaultOptions, $config['front_controller']);
+        $appConfig = $serviceLocator->get('Config');
+        if (isset($appConfig['front_controller'])) {
+            $config = ArrayUtils::merge($this->defaultOptions, $appConfig['front_controller']);
         } else {
             $config = $this->defaultOptions;
         }
@@ -89,6 +89,11 @@ class FrontControllerFactory implements FactoryInterface
 
         // set action helper plugin manager
         \Zend_Controller_Action_HelperBroker::setPluginLoader($serviceLocator->get('ActionHelperManager'));
+
+        // start layout, if needed
+        if (isset($appConfig['layout'])) {
+            Layout::startMvc($appConfig['layout']);
+        }
 
         return $frontController;
     }

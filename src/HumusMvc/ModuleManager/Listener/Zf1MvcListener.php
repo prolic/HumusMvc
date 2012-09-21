@@ -3,7 +3,6 @@
 namespace HumusMvc\ModuleManager\Listener;
 
 use HumusMvc\Exception;
-use HumusMvc\ModuleManager\Feature\FrontControllerProviderInterface;
 use Traversable;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\ListenerAggregateInterface;
@@ -12,13 +11,13 @@ use Zend\ServiceManager\ServiceManager;
 use Zend\Stdlib\ArrayUtils;
 
 /**
- * FrontController listener
+ * Zf1 Mvc listener
  *
  * @category   Humus
  * @package    HumusMvc
  * @subpackage ModuleManager
  */
-class FrontControllerListener implements ListenerAggregateInterface
+class Zf1MvcListener implements ListenerAggregateInterface
 {
     /**
      * @var array
@@ -36,6 +35,11 @@ class FrontControllerListener implements ListenerAggregateInterface
     protected $serviceManager;
 
     /**
+     * @var array
+     */
+    protected $resources = array();
+
+    /**
      * Constructor
      *
      * @param ServiceManager $serviceManager
@@ -43,6 +47,24 @@ class FrontControllerListener implements ListenerAggregateInterface
     public function __construct(ServiceManager $serviceManager)
     {
         $this->serviceManager = $serviceManager;
+    }
+
+    /**
+     * Add zf1 mvc factory
+     *
+     * @param string $configKey
+     * @param string $interface
+     * @param string $method
+     * @return Zf1MvcListener
+     */
+    public function addZf1MvcResource($configKey, $interface, $method)
+    {
+        $this->resources[] = array(
+            'config_key' => $configKey,
+            'interface' => $interface,
+            'module_class_method' => $method
+        );
+        return $this;
     }
 
     /**
@@ -71,7 +93,7 @@ class FrontControllerListener implements ListenerAggregateInterface
 
 
     /**
-     * Retrieve front controller configuration from module
+     * Retrieve configuration from module
      *
      * If the module does not implement a specific interface and does not
      * implement a specific method, does nothing. Also, if the return value
@@ -85,32 +107,33 @@ class FrontControllerListener implements ListenerAggregateInterface
     {
         $module = $e->getModule();
 
-        if (!$module instanceof FrontControllerProviderInterface
-            && !method_exists($module, 'getFrontControllerConfig')
-        ) {
-            return;
+        foreach ($this->resources as $resource) {
+            if (!$module instanceof $resource['interface']
+                && !method_exists($module, $resource['method'])
+            ) {
+                continue;
+            }
+            $config = $module->{$resource['module_class_method']}();
+            if ($config instanceof Traversable) {
+                $config = ArrayUtils::iteratorToArray($config);
+            }
+            if (!is_array($config)) {
+                throw new Exception\InvalidArgumentException(
+                    sprintf('Config being merged must be an array, '
+                        . 'implement the Traversable interface or be an instance '
+                        . 'of Zend\Config\Config, %s given.', gettype($config))
+                );
+            }
+            // We're keeping track of which modules provided which config
+            // The actual merging takes place later. Doing it this way will
+            // enable us to provide more powerful debugging tools for
+            // showing which modules overrode what.
+            $this->configs[$e->getModuleName()][$resource['config_key']] = $config;
         }
-
-        $frontControllerConfig = $module->getFrontControllerConfig();
-        if ($frontControllerConfig instanceof Traversable) {
-            $frontControllerConfig = ArrayUtils::iteratorToArray($frontControllerConfig);
-        }
-        if (!is_array($frontControllerConfig)) {
-            throw new Exception\InvalidArgumentException(
-                sprintf('Front controller config being merged must be an array, '
-                    . 'implement the \Traversable interface or be an instance '
-                    . 'of Zend\Config\Config, %s given.', gettype($frontControllerConfig))
-            );
-        }
-        // We're keeping track of which modules provided which config
-        // The actual merging takes place later. Doing it this way will
-        // enable us to provide more powerful debugging tools for
-        // showing which modules overrode what.
-        $this->configs[$e->getModuleName()] = $frontControllerConfig;
     }
 
     /**
-     * Update the front controller configuration in application config
+     * Update the config in application config
      *
      * @param \Zend\ModuleManager\ModuleEvent $e
      * @return void
@@ -119,11 +142,14 @@ class FrontControllerListener implements ListenerAggregateInterface
     {
         $serviceManager = $this->serviceManager;
         $appConfig = $serviceManager->get('Config');
-        if (!isset($appConfig['front_controller'])) {
-            $appConfig['front_controller'] = array();
-        }
-        foreach ($this->configs as $config) {
-            $appConfig['front_controller'] = ArrayUtils::merge($config, $appConfig['front_controller']);
+
+        foreach ($this->resources as $resource) {
+            if (!isset($appConfig[$resource['config_key']])) {
+                $appConfig[$resource['config_key']] = array();
+            }
+            foreach ($this->configs as $config) {
+                $appConfig[$resource['config_key']] = ArrayUtils::merge($config[$resource['config_key']], $appConfig[$resource['config_key']]);
+            }
         }
         $serviceManager->setAllowOverride(true);
         $serviceManager->setService('Config', $appConfig);
