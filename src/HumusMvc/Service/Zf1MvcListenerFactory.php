@@ -7,7 +7,7 @@ use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 /**
- * FrontController listener
+ * Zf1MvcListener listener
  *
  * @category   Humus
  * @package    HumusMvc
@@ -38,5 +38,6 @@ class Zf1MvcListenerFactory implements FactoryInterface
             'CacheManagerProviderInterface',
             'getCacheManagerConfig'
         );
+        return $listener;
     }
 }

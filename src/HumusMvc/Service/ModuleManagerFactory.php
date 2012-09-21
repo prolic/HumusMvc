@@ -37,6 +37,9 @@ class ModuleManagerFactory implements FactoryInterface
         if (!$serviceLocator->has('ServiceListener')) {
             $serviceLocator->setFactory('ServiceListener', 'HumusMvc\Service\ServiceListenerFactory');
         }
+        if (!$serviceLocator->has('Zf1MvcListener')) {
+            $serviceLocator->setFactory('Zf1MvcListener', 'HumusMvc\Service\Zf1MvcListenerFactory');
+        }
 
         $configuration    = $serviceLocator->get('ApplicationConfig');
         $listenerOptions  = new ListenerOptions($configuration['module_listener_options']);
@@ -65,7 +68,7 @@ class ModuleManagerFactory implements FactoryInterface
         $events = $serviceLocator->get('EventManager');
         $events->attach($defaultListeners);
         $events->attach($serviceListener);
-        $events->attach(new Zf1MvcListener($serviceLocator));
+        $events->attach($serviceLocator->get('Zf1MvcListener'));
         $events->attach(new LocaleListener());
 
         $moduleEvent = new ModuleEvent;

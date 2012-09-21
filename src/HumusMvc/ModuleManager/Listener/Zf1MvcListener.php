@@ -54,22 +54,22 @@ class Zf1MvcListener implements ListenerAggregateInterface
      *
      * @param string $configKey
      * @param string $interface
-     * @param string $method
+     * @param string $moduleClassMethod
      * @return Zf1MvcListener
      */
-    public function addZf1MvcResource($configKey, $interface, $method)
+    public function addZf1MvcResource($configKey, $interface, $moduleClassMethod)
     {
         $this->resources[] = array(
             'config_key' => $configKey,
             'interface' => $interface,
-            'module_class_method' => $method
+            'module_class_method' => $moduleClassMethod
         );
         return $this;
     }
 
     /**
      * @param  EventManagerInterface $events
-     * @return FrontControllerListener
+     * @return Zf1MvcListener
      */
     public function attach(EventManagerInterface $events)
     {
@@ -109,7 +109,7 @@ class Zf1MvcListener implements ListenerAggregateInterface
 
         foreach ($this->resources as $resource) {
             if (!$module instanceof $resource['interface']
-                && !method_exists($module, $resource['method'])
+                && !method_exists($module, $resource['module_class_method'])
             ) {
                 continue;
             }
@@ -135,14 +135,13 @@ class Zf1MvcListener implements ListenerAggregateInterface
     /**
      * Update the config in application config
      *
-     * @param \Zend\ModuleManager\ModuleEvent $e
+     * @param ModuleEvent $e
      * @return void
      */
     public function onLoadModulesPost(ModuleEvent $e)
     {
         $serviceManager = $this->serviceManager;
         $appConfig = $serviceManager->get('Config');
-
         foreach ($this->resources as $resource) {
             if (!isset($appConfig[$resource['config_key']])) {
                 $appConfig[$resource['config_key']] = array();

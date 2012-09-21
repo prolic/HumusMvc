@@ -32,7 +32,6 @@ class ServiceListenerFactory extends ZendServiceListenerFactory
             'ViewHelperManager'       => 'HumusMvc\Service\ViewHelperManagerFactory',
             'ActionHelperManager'     => 'HumusMvc\Service\ActionHelperManagerFactory',
             'Navigation'              => 'HumusMvc\Service\NavigationFactory',
-            'Zf1MvcListener'          => 'HumusMvc\ModuleManager\Listener\Zf1MvcListener',
             'CacheManager'            => 'HumusMvc\Service\CacheManagerFactory'
         ),
         'aliases' => array(
