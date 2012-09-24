@@ -8,46 +8,11 @@ use Zend\EventManager\ListenerAggregateInterface;
 use Zend_Locale as Locale;
 use Zend_Registry as Registry;
 
-class LocaleListener implements ListenerAggregateInterface
+class LocaleListener
 {
     const DEFAULT_REGISTRY_KEY = 'Zend_Locale';
 
-    /**
-     * @var array
-     */
-    protected $listeners = array();
-
-
-    /**
-     * Attach one or more listeners
-     *
-     * Implementors may add an optional $priority argument; the EventManager
-     * implementation will pass this to the aggregate.
-     *
-     * @param EventManagerInterface $events
-     */
-    public function attach(EventManagerInterface $events)
-    {
-        $sm = $events->getSharedManager();
-        $this->listeners[] = $sm->attach('HumusMvc\Applicatíon', 'bootstrap', array($this, 'onBootstrap'));
-        return $this;
-    }
-
-    /**
-     * Detach all previously attached listeners
-     *
-     * @param EventManagerInterface $events
-     */
-    public function detach(EventManagerInterface $events)
-    {
-        foreach ($this->listeners as $key => $listener) {
-            if ($events->detach($listener)) {
-                unset($this->listeners[$key]);
-            }
-        }
-    }
-
-    public function onBootstrap(MvcEvent $e)
+    public function __invoke(MvcEvent $e)
     {
         $serviceManager = $e->getApplication()->getServiceManager();
         $config = $serviceManager->get('Config');
@@ -56,7 +21,6 @@ class LocaleListener implements ListenerAggregateInterface
             // no layout config found, return
             return;
         }
-
         // set cache in locale to speed up application
         $cacheManager = $serviceManager->get('CacheManager');
         Locale::setCache($cacheManager->getCache('default'));

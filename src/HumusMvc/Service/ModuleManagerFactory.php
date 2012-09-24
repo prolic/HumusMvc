@@ -69,7 +69,8 @@ class ModuleManagerFactory implements FactoryInterface
         $events->attach($defaultListeners);
         $events->attach($serviceListener);
         $events->attach($serviceLocator->get('Zf1MvcListener'));
-        $events->attach(new LocaleListener());
+        $sharedEvents = $events->getSharedManager();
+        $sharedEvents->attach('Zend\Mvc\Application', 'bootstrap', new LocaleListener);
 
         $moduleEvent = new ModuleEvent;
         $moduleEvent->setParam('ServiceManager', $serviceLocator);
