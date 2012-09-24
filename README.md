@@ -24,15 +24,11 @@ However, you can install HumusMvc in your custom skeleton application:
 Features / Goals
 ----------------
 
- - add possibility to add custom view helpers with service listener [COMPLETE]
- - add possibility to add custom action helpers with service listener [COMPLETE]
  - add possibility to use view helpers with service locator [COMPLETE]
  - add possibility to use action helpers with service locator [COMPLETE]
  - add possibility to use controller plugins with service locator [COMPLETE]
  - configure Zend_Controller_Front with service locator [COMPLETE]
- - add front controller listener and view listener [COMPLETE]
  - add tests [INCOMPLETE]
- - refactor navigation service creation (see current ZF2 implementation) [INCOMPLETE]
  - refactore translation service [COMPLETE]
  - create Zf1MvcListenerAggregate and collect all mvc resources here [INCOMPLETE]
 

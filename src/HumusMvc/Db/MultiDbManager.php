@@ -1,6 +1,6 @@
 <?php
 
-namespace HumusMvc\Service;
+namespace HumusMvc\Db;
 
 use HumusMvc\Exception;
 use Zend_Db_Adapter_Abstract;

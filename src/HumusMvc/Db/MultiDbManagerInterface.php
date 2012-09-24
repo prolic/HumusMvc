@@ -1,6 +1,6 @@
 <?php
 
-namespace HumusMvc\Service;
+namespace HumusMvc\Db;
 
 interface MultiDbManagerInterface
 {

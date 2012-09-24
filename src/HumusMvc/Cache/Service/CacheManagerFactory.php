@@ -1,6 +1,6 @@
 <?php
 
-namespace HumusMvc\Service;
+namespace HumusMvc\Cache\Service;
 
 use HumusMvc\Exception;
 use Zend\ServiceManager\FactoryInterface;
