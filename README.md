@@ -32,6 +32,9 @@ Features / Goals
  - configure Zend_Controller_Front with service locator [COMPLETE]
  - add front controller listener and view listener [COMPLETE]
  - add tests [INCOMPLETE]
+ - refactor navigation service creation (see current ZF2 implementation) [INCOMPLETE]
+ - refactore translation service [COMPLETE]
+ - create Zf1MvcListenerAggregate and collect all mvc resources here [INCOMPLETE]
 
 View Helpers
 ------------

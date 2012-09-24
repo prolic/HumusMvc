@@ -3,7 +3,6 @@
 namespace HumusMvc\View\Helper;
 
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend_Navigation as ZendNavigation;
 use Zend_View_Exception as ViewException;
 use Zend_View_Helper_Navigation as NavigationViewHelper;
@@ -14,7 +13,7 @@ use Zend_View_Helper_Navigation_Helper as NavigationViewHelperHelper;
  * @package HumusMvc
  * @subpacke View
  */
-class Navigation extends NavigationViewHelper implements ServiceLocatorAwareInterface
+class Navigation extends NavigationViewHelper
 {
     /**
      * @var Navigation\PluginManager

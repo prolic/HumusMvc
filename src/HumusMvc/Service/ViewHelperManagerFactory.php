@@ -29,9 +29,17 @@ class ViewHelperManagerFactory extends AbstractPluginManagerFactory
 
         // override translate view helper, if translator is created by service locator
         if ($serviceLocator->has('Translator')) {
-            $plugins->setFactory('translate', function($sm) use($serviceLocator) {
+            $plugins->setFactory('translate', function($sm) use ($serviceLocator) {
                 $translateViewHelper = new \Zend_View_Helper_Translate($serviceLocator->get('Translator'));
                 return $translateViewHelper;
+            });
+        }
+
+        if ($serviceLocator->has('Navigation')) {
+            $plugins->setFactory('navigation', function($sm) use ($serviceLocator) {
+                $navigationViewHelper = new \HumusMvc\View\Helper\Navigation();
+                $navigationViewHelper->setServiceLocator($serviceLocator);
+                return $navigationViewHelper;
             });
         }
 
