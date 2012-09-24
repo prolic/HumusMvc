@@ -2,7 +2,6 @@
 
 namespace HumusMvc\Service;
 
-use HumusMvc\ModuleManager\Listener\Zf1MvcListener;
 use HumusMvc\ModuleManager\Listener\LocaleListener;
 use Zend\ModuleManager\Listener\DefaultListenerAggregate;
 use Zend\ModuleManager\Listener\ListenerOptions;
