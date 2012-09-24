@@ -33,7 +33,8 @@ class ServiceListenerFactory extends ZendServiceListenerFactory
             'ActionHelperManager'     => 'HumusMvc\Service\ActionHelperManagerFactory',
             'Navigation'              => 'HumusMvc\Service\NavigationFactory',
             'CacheManager'            => 'HumusMvc\Service\CacheManagerFactory',
-            'Translator'              => 'HumusMvc\Service\TranslatorFactory'
+            'Translator'              => 'HumusMvc\Service\TranslatorFactory',
+            'MultiDbManager'          => 'HumusMvc\Service\MultiDbManagerFactory'
         ),
         'aliases' => array(
             'Configuration'                          => 'Config',
@@ -44,7 +45,9 @@ class ServiceListenerFactory extends ZendServiceListenerFactory
             'Zend_Controller_Router_Rewrite'         => 'Router',
             'Zend_Controller_Request_Http'           => 'Request',
             'Zend_Controller_Response_Http'          => 'Response',
-            'Zend_Navigation'                        => 'Navigation'
+            'Zend_Navigation'                        => 'Navigation',
+            'HumusMvc\Service\MultiDbManager'        => 'MultiDbManager',
+            'MultiDb'                                => 'MultiDbManager'
         )
   );
 }
