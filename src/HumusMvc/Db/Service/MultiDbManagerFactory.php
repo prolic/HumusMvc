@@ -2,6 +2,7 @@
 
 namespace HumusMvc\Db\Service;
 
+use HumusMvc\Db\MultiDbManager;
 use HumusMvc\Exception;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
