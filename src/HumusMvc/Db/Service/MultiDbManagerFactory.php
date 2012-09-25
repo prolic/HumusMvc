@@ -43,7 +43,7 @@ class MultiDbManagerFactory implements FactoryInterface
             $params['isDefaultTableAdapter']
             );
 
-            $dbs[$id] = Zend_Db::factory($adapter, $params);
+            $dbs[$id] = $adapter = Zend_Db::factory($adapter, $params);
 
 
             if ($default) {
