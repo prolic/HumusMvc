@@ -12,18 +12,24 @@ class LocaleListener
 {
     const DEFAULT_REGISTRY_KEY = 'Zend_Locale';
 
+    /**
+     * @param \HumusMvc\MvcEvent $e
+     * @return void
+     */
     public function __invoke(MvcEvent $e)
     {
         $serviceManager = $e->getApplication()->getServiceManager();
         $config = $serviceManager->get('Config');
 
         if (!isset($config['locale'])) {
-            // no layout config found, return
+            // no locale config found, return
             return;
         }
         // set cache in locale to speed up application
-        $cacheManager = $serviceManager->get('CacheManager');
-        Locale::setCache($cacheManager->getCache('default'));
+        if ($serviceManager->has('CacheManager')) {
+            $cacheManager = $serviceManager->get('CacheManager');
+            Locale::setCache($cacheManager->getCache('default'));
+        }
 
         $options = $config['locale'];
         if (!isset($options['default'])) {
