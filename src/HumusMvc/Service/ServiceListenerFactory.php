@@ -20,6 +20,8 @@ class ServiceListenerFactory extends ZendServiceListenerFactory
         'invokables' => array(
             'Router'     => 'Zend_Controller_Router_Rewrite',
             'Dispatcher' => 'HumusMvc\Dispatcher',
+            'DispatchListener' => 'HumusMvc\DispatchListener',
+            'SendResponseListener' => 'HumusMvc\SendResponseListener',
             'Request'    => 'Zend_Controller_Request_Http',
             'Response'   => 'Zend_Controller_Response_Http'
         ),

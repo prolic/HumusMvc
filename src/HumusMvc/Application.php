@@ -111,6 +111,9 @@ class Application implements
         $serviceManager = $this->serviceManager;
         $events         = $this->getEventManager();
 
+        $events->attach($serviceManager->get('DispatchListener'));
+        $events->attach($serviceManager->get('SendResponseListener'));
+
         // Setup MVC Event
         $this->event = $event  = new MvcEvent();
         $event->setTarget($this);
@@ -230,19 +233,25 @@ class Application implements
      */
     public function run()
     {
+        $event = $this->getMvcEvent();
 
-        /** @var $front \Zend_Controller_Front */
-        $front = $this->getServiceManager()->get('FrontController');
-        $default = $front->getDefaultModule();
-        if (null === $front->getControllerDirectory($default)) {
-            throw new Exception\RuntimeException(
-                'No default controller directory registered with front controller'
-            );
-        }
-        $response = $front->dispatch();
+        // Define callback used to determine whether or not to short-circuit
+        $shortCircuit = function ($r) use ($event) {
+            if ($r instanceof Response) {
+                return true;
+            }
+            return false;
+        };
 
-        if ($front->returnResponse()) {
-            return $response;
+        $events = $this->getEventManager();
+        $result = $events->trigger(MvcEvent::EVENT_DISPATCH, $event, $shortCircuit);
+
+        // Complete response
+        $response = $result->last();
+        if ($response instanceof Response) {
+            $event->setTarget($this);
+            $events->trigger(MvcEvent::EVENT_FINISH, $event);
         }
+
     }
 }

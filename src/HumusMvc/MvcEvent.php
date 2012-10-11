@@ -17,6 +17,8 @@ class MvcEvent extends Event
      * Mvc events triggered by eventmanager
      */
     const EVENT_BOOTSTRAP      = 'bootstrap';
+    const EVENT_DISPATCH       = 'dispatch';
+    const EVENT_FINISH         = 'finish';
     /**#@-*/
 
     protected $application;

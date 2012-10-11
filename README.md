@@ -32,6 +32,8 @@ Features / Goals
  - refactore translation service [COMPLETE]
  - create Zf1MvcListenerAggregate and collect all mvc resources here [INCOMPLETE]
  - locale (Zend_Locale) will be created and stored in registry on every request [COMPLETE]
+ - make dispatching event based [COMPLETE]
+ - add documentation [INCOMPLETE]
 
 View Helpers
 ------------

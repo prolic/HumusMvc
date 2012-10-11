@@ -25,7 +25,7 @@ class FrontControllerFactory implements FactoryInterface
         'module_controller_directory_name' => 'controllers',
         'base_url' => null,
         'throw_exceptions' => false,
-        'return_response' => false,
+        'return_response' => true,
         'default_module' => 'default',
         'default_controller_name' => 'index',
         'default_action' => 'index',
