@@ -11,6 +11,12 @@ Dependencies
  -  Any application similar to the
     [HumusMvcSkeletonApplication](https://github.com/prolic/HumusMvcSkeletonApplication)
 
+Optional dependencies
+---------------------
+
+ -  [HumusMvcAssetManager 1.x](https://github.com/prolic/HumusMvcAssetManager) for asset management
+
+
 Installation
 ------------
 
@@ -21,6 +27,7 @@ However, you can install HumusMvc in your custom skeleton application:
  1.  Add `"prolic/humus-mvc": "dev-master"` to your `composer.json`
  2.  Run `php composer.phar install`
 
+
 Features / Goals
 ----------------
 
@@ -28,11 +35,9 @@ Features / Goals
  - add possibility to use action helpers with service locator [COMPLETE]
  - add possibility to use controller plugins with service locator [COMPLETE]
  - configure Zend_Controller_Front with service locator [COMPLETE]
- - add tests [INCOMPLETE]
- - refactore translation service [COMPLETE]
- - create Zf1MvcListenerAggregate and collect all mvc resources here [INCOMPLETE]
  - locale (Zend_Locale) will be created and stored in registry on every request [COMPLETE]
  - make dispatching event based [COMPLETE]
+ - add tests [INCOMPLETE]
  - add documentation [INCOMPLETE]
 
 View Helpers
@@ -86,7 +91,6 @@ Sample front controller configuration in module.config.php:
                 ),
             ),
             'throw_exceptions' => false,
-            'return_response' => false,
             'default_module' => 'default',
             'default_action' => 'index',
             'default_controller_name' => 'index',

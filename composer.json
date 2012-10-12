@@ -8,13 +8,17 @@
     "authors": [
         {
             "name": "Sascha-Oliver Prolic",
-            "email": "saschaprolic@googlemail.com"
+            "email": "saschaprolic@googlemail.com",
+            "homepage": "http://www.sasaprolic.com/"
         }
     ],
     "require": {
         "php": ">=5.3.3",
         "zendframework/zendframework": "2.*",
         "zendframework/zendframework1": "1.12.*"
+    },
+    "suggest": {
+        "prolic/humus-mvc-assetmanager": "HumusMvcAssetManager >= 1.0 for asset management"
     },
     "autoload": {
         "classmap": [ "src/" ]

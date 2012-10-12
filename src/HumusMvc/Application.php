@@ -228,15 +228,14 @@ class Application implements
     /**
      * Run the application
      *
-     * @return mixed
-     * @throws Exception\RuntimeException if no default controller is registered with front controller
+     * @return void
      */
     public function run()
     {
         $event = $this->getMvcEvent();
 
         // Define callback used to determine whether or not to short-circuit
-        $shortCircuit = function ($r) use ($event) {
+        $shortCircuit = function ($r) {
             if ($r instanceof Response) {
                 return true;
             }
