@@ -3,7 +3,7 @@
 namespace HumusMvc\Service;
 
 use HumusMvc\Application;
-use HumusMvc\View as View;
+use HumusMvc\View\View as View;
 use Zend\ServiceManager\Exception\InvalidArgumentException;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -30,12 +30,12 @@ class ViewFactory implements FactoryInterface
         $config = $serviceLocator->get('Config');
         $viewConfig = isset($config['view']) ? $config['view'] : array();
 
-        $className = isset($viewConfig['classname']) ? $viewConfig['classname'] : 'HumusMvc\View';
+        $className = isset($viewConfig['classname']) ? $viewConfig['classname'] : 'HumusMvc\View\View';
         $view = new $className($viewConfig);
         if (!$view instanceof View) {
-            throw new InvalidArgumentException('View object must extend HumusMvc\View');
+            throw new InvalidArgumentException('View object must extend HumusMvc\View\View');
         }
-        $view->setPluginLoader($serviceLocator->get('ViewHelperManager'), 'helper');
+        $view->setHelperPluginManager($serviceLocator->get('ViewHelperManager'));
 
         if (isset($viewConfig['doctype'])) {
             $view->doctype()->setDoctype(strtoupper($viewConfig['doctype']));

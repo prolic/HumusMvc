@@ -2,11 +2,11 @@
 
 namespace HumusMvc\Service;
 
-use HumusMvc\Controller\Action\Helper\ViewRenderer;
 use HumusMvc\Exception;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\Stdlib\ArrayUtils;
+use Zend_Controller_Action_HelperBroker as ActionHelperBroker;
 use Zend_Controller_Front as FrontController;
 use Zend_Layout as Layout;
 
@@ -89,8 +89,8 @@ class FrontControllerFactory implements FactoryInterface
 
         // set action helper plugin manager
         $actionHelperManager = $serviceLocator->get('ActionHelperManager');
-        \Zend_Controller_Action_HelperBroker::setPluginLoader($actionHelperManager);
-        \Zend_Controller_Action_HelperBroker::addHelper($actionHelperManager->get('viewRenderer'));
+        ActionHelperBroker::setPluginLoader($actionHelperManager);
+        ActionHelperBroker::addHelper($actionHelperManager->get('viewRenderer'));
 
         // start layout, if needed
         if (isset($appConfig['layout'])) {

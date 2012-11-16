@@ -3,9 +3,8 @@
 namespace HumusMvc\View;
 
 use HumusMvc\Exception;
-use HumusMvc\Service\AbstractPluginManager;
+use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\ConfigInterface;
-use Zend_Loader_PluginLoader_Interface as PluginLoaderInterface;
 use Zend_View_Interface as ViewInterface;
 use Zend_View_Helper_Interface as ViewHelperInterface;
 
@@ -20,7 +19,7 @@ use Zend_View_Helper_Interface as ViewHelperInterface;
  * @package    HumusMvc
  * @subpackage View
  */
-class HelperPluginManager extends AbstractPluginManager implements PluginLoaderInterface
+class HelperPluginManager extends AbstractPluginManager
 {
 
     /**
