@@ -218,4 +218,24 @@ class View implements ViewInterface
         return $this->_view->render($name);
     }
 
+    /**
+     * Accesses a helper object from within a script.
+     *
+     * If the helper class has a 'view' property, sets it with the current view
+     * object.
+     *
+     * @param string $name The helper name.
+     * @param array $args The parameters for the helper.
+     * @return string The result of the helper output.
+     */
+    public function __call($name, $args)
+    {
+        $helper = $this->getHelperPluginManager()->get($name);
+        // call the helper method
+        return call_user_func_array(
+            array($helper, $name),
+            $args
+        );
+    }
+
 }
