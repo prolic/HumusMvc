@@ -4,9 +4,7 @@ namespace HumusMvc\View;
 
 use HumusMvc\Exception;
 use HumusMvc\View\HelperPluginManager;
-use Zend_Loader_PluginLoader_Interface as PluginLoader;
 use Zend_View;
-use Zend_View_Exception as ViewException;
 
 /**
  * @category   Humus
