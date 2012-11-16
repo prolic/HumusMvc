@@ -253,4 +253,15 @@ class View implements ViewInterface
         );
     }
 
+    /**
+     * Get helper by name
+     *
+     * @param $name
+     * @return object
+     */
+    public function getHelper($name)
+    {
+        return $this->getHelperPluginManager()->get($name);
+    }
+
 }
