@@ -27,10 +27,12 @@ class View implements ViewInterface
 
     /**
      * Constructor
+     *
+     * @param array $config Configuration key-value pairs.
      */
-    public function __construct()
+    public function __construct($config = array())
     {
-        $this->_view = new Zend_View();
+        $this->_view = new Zend_View($config);
     }
 
     /**
@@ -138,6 +140,19 @@ class View implements ViewInterface
     {
         $this->_view->addBasePath($path, $classPrefix);
         return $this;
+    }
+
+    /**
+     * Prevent E_NOTICE for nonexistent values
+     *
+     * If {@link strictVars()} is on, raises a notice.
+     *
+     * @param  string $key
+     * @return null
+     */
+    public function __get($key)
+    {
+        $this->_view->__get($key);
     }
 
     /**
