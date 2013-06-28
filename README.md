@@ -1,6 +1,8 @@
 HumusMvc
 ====================
 
+[![Dependency Status](https://www.versioneye.com/package/php:prolic:humus-mvc/badge.png)](https://www.versioneye.com/package/php:prolic:humus-mvc)
+
 HumusMvc integrates Zend Framework 2's ModuleManager and ServiceManager in a ZF1 application. There is also a [HumusMvcSkeletonApplication](https://github.com/prolic/HumusMvcSkeletonApplication). No Zend_Application will be used any more.
 
 Dependencies
