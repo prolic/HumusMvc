@@ -173,7 +173,9 @@ class HelperPluginManager extends AbstractPluginManager
      */
     public function validatePlugin($plugin)
     {
-        if ($plugin instanceof ViewHelperInterface) {
+        //bug fix: not all plugin implements the ViewHelperInterface
+        //eg: PaginationControl, but it has the setView method so it's ok to inject
+        if ($plugin instanceof ViewHelperInterface || method_exists($plugin, 'setView')) {
             // we're okay
             return;
         }
