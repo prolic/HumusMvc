@@ -150,10 +150,11 @@ class HelperPluginManager extends AbstractPluginManager
     /**
      * Inject a helper instance with the registered view
      *
-     * @param  ViewHelperInterface $helper
+     * @param  $helper fix issue: Removed ViewHelperInterface cause not every helper implement it (Look at PaginationControl). 
+     *                      Let validatePlugin do the work for us.
      * @return void
      */
-    public function injectView(ViewHelperInterface $helper)
+    public function injectView($helper)
     {
         $view = $this->getView();
         if (null === $view) {
