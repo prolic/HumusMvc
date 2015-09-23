@@ -32,7 +32,7 @@ interface ApplicationInterface extends EventsCapableInterface
     /**
      * Get the locator object
      *
-     * @return ServiceManager
+     * @return ServiceLocatorInterface
      */
     public function getServiceManager();
 

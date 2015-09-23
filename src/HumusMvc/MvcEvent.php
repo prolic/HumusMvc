@@ -18,6 +18,7 @@
 
 namespace HumusMvc;
 
+use Zend\Mvc\MvcEvent as Zf2MvcEvent;
 use Zend\EventManager\Event;
 use Zend_Controller_Router_Interface as Router;
 use Zend_Controller_Request_Abstract as Request;
@@ -27,7 +28,7 @@ use Zend_Controller_Response_Abstract as Response;
  * @category   Humus
  * @package    HumusMvc
  */
-class MvcEvent extends Event
+class MvcEvent extends Zf2MvcEvent
 {
     /**#@+
      * Mvc events triggered by eventmanager
